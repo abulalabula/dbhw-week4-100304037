@@ -1,0 +1,82 @@
+<html>
+  <head>
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/lodash/4.6.1/lodash.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+    <!-- fontawesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./css/main.css">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="./js/main.js"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+    	<div class="container">
+      	<div class="navbar-header">
+        	<a class="navbar-brand" href="#">台北市學習型機構</a>
+      	</div>
+    	</div>
+  	</nav>
+
+
+  	<!-- Main jumbotron for a primary marketing message or call to action -->
+  	<div class="jumbotron">
+    	<div class="container">
+      	<br>
+      	<br>
+      	<h1>台北市學習型機構</h1>
+    	</div>
+  	</div>
+
+  	<div class="container">
+    	<!-- Example row of columns -->
+    	<div id="content" class="row"></div>
+    	<div class="sk-cube-grid">
+      	<div class="sk-cube sk-cube1"></div>
+      	<div class="sk-cube sk-cube2"></div>
+      	<div class="sk-cube sk-cube3"></div>
+      	<div class="sk-cube sk-cube4"></div>
+      	<div class="sk-cube sk-cube5"></div>
+      	<div class="sk-cube sk-cube6"></div>
+      	<div class="sk-cube sk-cube7"></div>
+      	<div class="sk-cube sk-cube8"></div>
+      	<div class="sk-cube sk-cube9"></div>
+    	</div>
+    	<hr>
+    	<footer>
+      	<p>&copy; 2016 NCCU abulalabula</p>
+    	</footer>
+  	</div> <!-- /container -->
+  </body>
+  <script type="text/javascript">
+  $(document).ready(function() {
+    getData(function(err, data) {
+      if(err) {
+        console.log(err);
+      }
+      else {
+        var learnList =JSON.parse(data);
+        var HTMLlearnList = learnList.map(function(learn) {
+          var HTMLString = "<div class='col-md-4 drop-"+(Math.round(Math.random()*10000%3)+1)+"'><h2>"+learn.Name+"</h2><img class='img-thumbnail' src='"+learn.Picture1+"'><p><ul class='list-group'>";
+                     var items = "";
+                     for (var key in learn) {
+                       if(key!="_id" && key!="Image") {
+                         items=items+"<li class='list-group-item'>"+key+":"+learn[key]+"</li>";
+                       }
+                     }
+                     var HTMLString = HTMLString+items+"</ul></p><div>";
+                     return HTMLString;
+                   });
+        HTMLlearnList.forEach(function(html) {
+          $(html).appendTo("#content");
+        });
+        $('#loading').css('display','none');
+      }
+    });
+  });
+  </script>
+</html>
